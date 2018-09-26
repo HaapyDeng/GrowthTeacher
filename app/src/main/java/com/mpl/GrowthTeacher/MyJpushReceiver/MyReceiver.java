@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.mpl.GrowthTeacher.Activity.MainActivity;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -47,6 +49,9 @@ public class MyReceiver extends BroadcastReceiver {
 
             } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
                 Log.d(TAG, "[MyReceiver] 用户点击打开了通知");
+                Intent intent1 = new Intent(context, MainActivity.class);
+                intent1.putExtra("flag", 1);
+                context.startActivity(intent1);
 //                Intent intent1 = new Intent(context, MainActivity.class);
 //                intent1.putExtra("flag", 1);
 //                context.startActivity(intent1);

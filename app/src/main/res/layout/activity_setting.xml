@@ -1,195 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/my_background_gradient"
+    android:background="#F7F9FA"
     android:orientation="vertical"
-    tools:context=".Activity.MyFragment">
+    tools:context=".Activity.SettingActivity">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="#3699ED">
+        android:layout_height="50dp"
+        android:background="@drawable/gradual_change"
+        android:gravity="center"
+        android:orientation="horizontal">
 
-        <ImageView
+
+        <LinearLayout
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:background="@mipmap/icon_white_back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:text="个人"
+                android:textColor="#ffffff"
+                android:textSize="17dp" />
+        </LinearLayout>
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@mipmap/my_background" />
-
-        <com.mpl.GrowthTeacher.View.CircleImageView
-            android:id="@+id/head_img"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="26dp" />
-
-        <TextView
-            android:id="@+id/tv_teacher_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="41dp"
-            android:textColor="#ffffff"
-            android:textSize="17dp" />
-
-        <ImageView
-            android:id="@+id/iv_gender"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="41dp"
-            android:layout_toRightOf="@+id/tv_teacher_name" />
-
-        <ImageView
-            android:id="@+id/ib_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/head_img"
-            android:layout_marginRight="20dp"
-            android:src="@mipmap/bell" />
-    </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/own_class"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_marginRight="40dp"
             android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:text="管理班级"
-            android:textColor="#353535"
-            android:textSize="17dp" />
-
-        <TextView
-            android:id="@+id/tv_classname"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:textColor="#999999"
-            android:textSize="17dp" />
-    </LinearLayout>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="0.1dp"
-        android:layout_marginLeft="10dp"
-        android:background="#999999" />
-
-    <LinearLayout
-        android:id="@+id/ll_school"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:text="学校"
-            android:textColor="#353535"
-            android:textSize="17dp" />
-
-        <TextView
-            android:id="@+id/tv_school"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:textColor="#999999"
-            android:textSize="17dp" />
-    </LinearLayout>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="0.1dp"
-        android:layout_marginLeft="10dp"
-        android:background="#999999" />
-
-    <LinearLayout
-        android:id="@+id/ll_changepsd"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:text="修改密码"
-            android:textColor="#353535"
-            android:textSize="17dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:drawableRight="@mipmap/allow_right"
-            android:gravity="center_vertical"
-            android:textColor="#999999"
-            android:textSize="17dp" />
-    </LinearLayout>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="0.1dp"
-        android:layout_marginLeft="10dp"
-        android:background="#999999" />
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="#F7F9FA" />
-
-    <LinearLayout
-        android:id="@+id/ll_set"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:drawableLeft="@mipmap/icon_setting"
-            android:drawablePadding="10dp"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:text="设置"
-            android:textColor="#353535"
-            android:textSize="17dp" />
+            android:textColor="#ffffff"
+            android:textSize="19dp" />
+
+    </LinearLayout>
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:layout_marginLeft="10dp"
+        android:background="#999999" />
+
+    <LinearLayout
+        android:id="@+id/ll_upgrade"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="版本更新"
+            android:textColor="#353535"
+            android:textSize="17dp" />
+
+        <TextView
+            android:id="@+id/tv_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:drawableRight="@mipmap/allow_right"
             android:gravity="center_vertical"
             android:textColor="#999999"
-            android:textSize="11dp" />
+            android:textSize="17dp" />
     </LinearLayout>
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#F7F9FA" />
+        android:layout_height="0.1dp"
+        android:layout_marginLeft="10dp"
+        android:background="#999999" />
+
+    <LinearLayout
+        android:id="@+id/ll_clear"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="清除缓存"
+            android:textColor="#353535"
+            android:textSize="17dp" />
+
+        <TextView
+            android:id="@+id/tv_cache"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:drawableRight="@mipmap/allow_right"
+            android:gravity="center_vertical"
+            android:textColor="#999999"
+            android:textSize="17dp" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:layout_marginLeft="10dp"
+        android:background="#999999" />
+
+    <LinearLayout
+        android:id="@+id/ll_about"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="关于我们"
+            android:textColor="#353535"
+            android:textSize="17dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@mipmap/allow_right"
+            android:gravity="center_vertical"
+            android:textColor="#999999"
+            android:textSize="17dp" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:layout_marginLeft="10dp"
+        android:background="#999999" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+
+    <TextView
+        android:id="@+id/log_out"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:background="#ffffff"
+        android:gravity="center"
+        android:text="退出登录"
+        android:textColor="#ff4700"
+        android:textSize="17dp" />
 
 </LinearLayout>

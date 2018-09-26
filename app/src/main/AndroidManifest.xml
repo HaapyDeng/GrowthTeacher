@@ -144,17 +144,43 @@
             android:name="JPUSH_APPKEY"
             android:value="bcfb9cbf2987e81ea54f60b0" /> <!-- </>值来自开发者平台取得的AppKey -->
 
-        <activity android:name=".Activity.SplashActivity">
+        <activity
+            android:name=".Activity.SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.LoginActivity" />
-        <activity android:name=".Activity.GuideActivity" />
-        <activity android:name=".Activity.MainActivity" />
-        <activity android:name=".Activity.ForgotPasswordActivity"></activity>
+        <activity
+            android:name=".Activity.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.GuideActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.ForgotPasswordActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.MessageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.MessageInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.ChangePsdActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.SettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activity.AboutActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
