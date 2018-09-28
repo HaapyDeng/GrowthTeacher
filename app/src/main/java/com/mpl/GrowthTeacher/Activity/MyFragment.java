@@ -85,6 +85,7 @@ public class MyFragment extends Fragment implements View.OnClickListener {
         loadingDialog = new LoadingDialog(getContext(), "加载中...", R.drawable.ic_dialog_loading);
         loadingDialog.show();
         if (NetworkUtils.checkNetWork(getActivity()) == false) {
+            loadingDialog.dismiss();
             Toast.makeText(getActivity(), R.string.no_network, Toast.LENGTH_LONG).show();
             return;
         }
