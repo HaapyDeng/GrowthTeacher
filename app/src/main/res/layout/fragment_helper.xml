@@ -1,14 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_gradual_change"
+
+    android:orientation="vertical"
     tools:context=".Activity.HelperFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="50dp"
+        android:background="@drawable/gradual_change"
+        android:orientation="horizontal">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:text="小助手"
+            android:textColor="#ffffff"
+            android:textSize="19dp" />
+
+        <ImageView
+            android:id="@+id/ib_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:src="@mipmap/bell" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_zhonghe"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#FFFFFF"
+        android:drawableLeft="@mipmap/tilticion_elevation"
+        android:drawablePadding="10dp"
+        android:drawableRight="@mipmap/allow_right"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="综合评价"
+        android:textColor="#333333"
+        android:textSize="17dp" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="10dp"
+        android:background="#eeeeee" />
+
+    <TextView
+        android:id="@+id/tv_studentchengjiu"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#FFFFFF"
+        android:drawableLeft="@mipmap/tilticion_achievement"
+        android:drawablePadding="10dp"
+        android:drawableRight="@mipmap/allow_right"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="学生成就"
+        android:textColor="#333333"
+        android:textSize="17dp" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="10dp"
+        android:background="#eeeeee" />
+
+    <TextView
+        android:id="@+id/tv_tasktongji"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#FFFFFF"
+        android:drawableLeft="@mipmap/tilticion_task_count"
+        android:drawablePadding="10dp"
+        android:drawableRight="@mipmap/allow_right"
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="任务统计"
+        android:textColor="#333333"
+        android:textSize="17dp" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="10dp"
+        android:background="#eeeeee" />
+
+</LinearLayout>

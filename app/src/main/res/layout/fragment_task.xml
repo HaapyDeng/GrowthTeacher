@@ -20,7 +20,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
-            android:text="综合评价"
+            android:text="任务"
             android:textColor="#ffffff"
             android:textSize="19dp" />
 
