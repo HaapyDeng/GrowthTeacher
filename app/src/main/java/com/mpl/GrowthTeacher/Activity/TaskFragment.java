@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -34,6 +35,8 @@ public class TaskFragment extends Fragment implements View.OnClickListener {
     private ImageView ib_message;
     private ListView listView;
     private LoadingDialog loadingDialog;
+    private int currentPage = 1;
+    private TextView tv_check_more;
 
 
     public TaskFragment() {
@@ -56,6 +59,8 @@ public class TaskFragment extends Fragment implements View.OnClickListener {
         ib_message = root.findViewById(R.id.ib_message);
         ib_message.setOnClickListener(this);
         listView = root.findViewById(R.id.listview);
+        tv_check_more = root.findViewById(R.id.tv_check_more);
+        tv_check_more.setOnClickListener(this);
         doGetTask();
         return root;
     }
@@ -70,7 +75,7 @@ public class TaskFragment extends Fragment implements View.OnClickListener {
         }
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("myinfo", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
-        String url = getResources().getString(R.string.local_url) + "/v1/task/" + "0/" + "0/" + "0/" + "0" + "?page=1";
+        String url = getResources().getString(R.string.local_url) + "/v1/task/" + "0/" + "0/" + "0/" + "0" + "?page=" + currentPage;
         Log.d("url==>>", url);
         AsyncHttpClient client = new AsyncHttpClient();
         client.addHeader("X-Api-Token", token);
@@ -126,6 +131,10 @@ public class TaskFragment extends Fragment implements View.OnClickListener {
             case R.id.ib_message:
                 Intent intent = new Intent(getActivity(), MessageActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.tv_check_more:
+                Intent intent1 = new Intent(getActivity(), CheckMoreTaskActivity.class);
+                startActivity(intent1);
                 break;
         }
     }

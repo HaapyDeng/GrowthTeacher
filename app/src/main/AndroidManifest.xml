@@ -180,7 +180,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activity.AboutActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".Activity.CheckMoreTaskActivity"></activity>
     </application>
 
 </manifest>
