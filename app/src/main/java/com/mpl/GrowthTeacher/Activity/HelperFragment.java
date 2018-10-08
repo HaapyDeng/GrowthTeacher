@@ -57,6 +57,8 @@ public class HelperFragment extends Fragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.tv_zhonghe:
+                Intent intent1 = new Intent(getActivity(), ComprehensiveEvaluationActivity.class);
+                startActivity(intent1);
                 break;
             case R.id.tv_studentchengjiu:
                 break;

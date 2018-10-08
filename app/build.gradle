@@ -44,4 +44,5 @@ dependencies {
     implementation 'com.github.mcxtzhang:all-base-adapter:V1.5.2'
     implementation 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.3.0'
     implementation files('libs/jpush-android-3.1.6.jar')
+    implementation 'com.github.nicolasjafelle:paginglistview:1.2'
 }

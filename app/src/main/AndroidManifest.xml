@@ -181,7 +181,8 @@
         <activity
             android:name=".Activity.AboutActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Activity.CheckMoreTaskActivity"></activity>
+        <activity android:name=".Activity.CheckMoreTaskActivity" />
+        <activity android:name=".Activity.ComprehensiveEvaluationActivity"></activity>
     </application>
 
 </manifest>
