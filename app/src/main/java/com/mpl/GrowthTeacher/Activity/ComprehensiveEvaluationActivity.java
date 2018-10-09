@@ -179,18 +179,17 @@ public class ComprehensiveEvaluationActivity extends Activity implements View.On
         });
     }
 
-    private Handler handler = new Handler() {
-        @SuppressLint("NewApi")
+    private Handler handler = new Handler(new Handler.Callback() {
         @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
+        public boolean handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
                     tv_total.setText(totalCount + "人");
                     break;
             }
+            return false;
         }
-    };
+    });
 
     @Override
     public void onClick(View view) {
