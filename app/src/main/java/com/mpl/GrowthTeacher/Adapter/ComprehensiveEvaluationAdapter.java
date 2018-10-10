@@ -61,9 +61,9 @@ public class ComprehensiveEvaluationAdapter extends BaseAdapter {
         ComprehensiveEvaluationItem comprehensiveEvaluationItem = mDatas.get(position);
         String gender = comprehensiveEvaluationItem.getGender();
         if (gender.equals("1")) {
-            holder.iv_head.setBackground(mContext.getResources().getDrawable(R.mipmap.head_student_boy));
+            holder.iv_head.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.head_student_boy));
         } else {
-            holder.iv_head.setBackground(mContext.getResources().getDrawable(R.mipmap.head_studen_girl));
+            holder.iv_head.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.head_studen_girl));
         }
         holder.tv_name.setText(comprehensiveEvaluationItem.getName());
         holder.tv_classname.setText(comprehensiveEvaluationItem.getGrade() + "·" + comprehensiveEvaluationItem.getClassroom_name());
