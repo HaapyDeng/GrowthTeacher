@@ -2,6 +2,7 @@ package com.mpl.GrowthTeacher.Activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -290,6 +291,11 @@ public class ComprehensiveEvaluationActivity extends Activity implements View.On
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+        String studentId = mDatas.get(i).getId();
+        Intent intent = new Intent(this, ComprehensiveEvaItemDetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("studentId", studentId);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }

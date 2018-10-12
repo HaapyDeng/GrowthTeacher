@@ -182,7 +182,10 @@
             android:name=".Activity.AboutActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".Activity.CheckMoreTaskActivity" />
-        <activity android:name=".Activity.ComprehensiveEvaluationActivity"></activity>
+        <activity android:name=".Activity.ComprehensiveEvaluationActivity" />
+        <activity android:name=".Activity.ComprehensiveEvaItemDetailActivity" />
+        <activity android:name=".Activity.GetStarInfoInfoActivity" />
+        <activity android:name=".Activity.GetScoreInfoInfoActivity"></activity>
     </application>
 
 </manifest>
