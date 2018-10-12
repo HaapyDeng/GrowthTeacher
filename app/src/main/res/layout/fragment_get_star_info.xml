@@ -26,7 +26,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@mipmap/star_big" />
+            android:background="@mipmap/star_small" />
 
         <ImageView
             android:layout_width="5dp"
