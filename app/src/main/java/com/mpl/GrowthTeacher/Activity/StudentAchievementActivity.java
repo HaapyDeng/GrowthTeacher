@@ -18,11 +18,15 @@ import android.widget.Toast;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mpl.GrowthTeacher.Adapter.ComprehensiveEvaluationAdapter;
+import com.mpl.GrowthTeacher.Bean.ChooseItemBean;
 import com.mpl.GrowthTeacher.Bean.ComprehensiveEvaluationItem;
 import com.mpl.GrowthTeacher.R;
 import com.mpl.GrowthTeacher.Tools.NetworkUtils;
+import com.mpl.GrowthTeacher.View.LoadMoreListView;
 import com.mpl.GrowthTeacher.View.LoadingDialog;
 import com.paging.listview.PagingListView;
+import com.yangchangfu.pickview_lib.Item;
+import com.yangchangfu.pickview_lib.PickView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,7 +41,7 @@ public class StudentAchievementActivity extends AppCompatActivity implements Ada
 
     private TextView tv_choose, tv_total;
     private LinearLayout back;
-    private PagingListView listview;
+    private LoadMoreListView listview;
     private LoadingDialog loadingDialog;
     private String currentPage = "1";
     private int totalPage;
@@ -47,6 +51,11 @@ public class StudentAchievementActivity extends AppCompatActivity implements Ada
 
     private SwipeRefreshLayout mSwipeLayout;
     private boolean isRefresh = false;//是否刷新中
+
+    private List<Item> cates;
+    private List<ChooseItemBean> chooseItemBeans;
+    private PickView catePickView;
+    private String cid = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,16 +71,16 @@ public class StudentAchievementActivity extends AppCompatActivity implements Ada
 
 
         listview = findViewById(R.id.listview);
-        initData(currentPage, "0");
-        listview.setHasMoreItems(true);
-        listview.setPagingableListener(new PagingListView.Pagingable() {
+        initData(currentPage, cid);
+        listview.setOnLoadMoreListener(new LoadMoreListView.OnLoadMoreListener() {
             @Override
-            public void onLoadMoreItems() {
-                if (Integer.parseInt(currentPage) < totalPage) {
-                    initData("" + (Integer.getInteger(currentPage) + 1), "0");
-                    comprehensiveEvaluationAdapter.notifyDataSetChanged();
+            public void onloadMore() {
+                int i = Integer.parseInt(currentPage);
+                Log.d("i==>>", "" + i);
+                if (i < totalPage) {
+                    initData("" + (Integer.getInteger(currentPage) + 1), cid);
                 } else {
-                    listview.onFinishLoading(false, null);
+                    listview.setLoadCompleted();
                 }
             }
         });
@@ -207,12 +216,12 @@ public class StudentAchievementActivity extends AppCompatActivity implements Ada
                 break;
             case R.id.tv_choose://筛选
                 //加载筛选窗口数
-                GetClassroomData();
+                initCates();
                 break;
         }
     }
 
-    private void GetClassroomData() {
+    private void initCates() {
         loadingDialog = new LoadingDialog(this, "加载中...", R.drawable.ic_dialog_loading);
         loadingDialog.show();
         if (NetworkUtils.checkNetWork(this) == false) {
@@ -235,7 +244,55 @@ public class StudentAchievementActivity extends AppCompatActivity implements Ada
                     int code = response.getInt("code");
                     if (code == 0) {
                         loadingDialog.dismiss();
-
+                        List<Item> items = new ArrayList<>();
+                        JSONArray data = response.getJSONArray("data");
+                        for (int i = 0; i < data.length(); i++) {
+                            Item item = new Item();
+                            JSONObject object = data.getJSONObject(i);
+                            item.name = object.getString("name");
+                            List<Item> items1 = new ArrayList<>();
+                            JSONArray grade = object.getJSONArray("item");
+                            chooseItemBeans = new ArrayList<ChooseItemBean>();
+                            for (int j = 0; j < grade.length(); j++) {
+                                JSONObject object2 = grade.getJSONObject(j);
+                                Item item1 = new Item();
+                                item1.name = object2.getString("name");
+                                String id = object2.getString("id");
+                                ChooseItemBean bean = new ChooseItemBean(id, item1.name);
+                                chooseItemBeans.add(bean);
+                                items1.add(item1);
+                            }
+                            item.items = items1;
+                            items.add(item);
+                        }
+                        StudentAchievementActivity.this.cates = items;
+                        catePickView = new PickView(StudentAchievementActivity.this);
+                        catePickView.setPickerView(cates, PickView.Style.DOUBLE);
+                        catePickView.setShowSelectedTextView(false);
+                        catePickView.show();
+                        catePickView.setOnSelectListener(new PickView.OnSelectListener() {
+                            @Override
+                            public void OnSelectItemClick(View view, int[] selectedIndexs, String selectedText) {
+                                Log.d("selectedText==>>", selectedText);
+                                for (int i = 0; i < chooseItemBeans.size(); i++) {
+                                    if ((selectedText.substring(selectedText.length() - 2)).equals(chooseItemBeans.get(i).getName())) {
+                                        cid = chooseItemBeans.get(i).getId();
+                                        Log.d("cid==>>", cid);
+                                        if (mDatas.size() > 0) {
+                                            mDatas.clear();
+                                        }
+                                        initData(currentPage, cid);
+                                    }
+                                }
+                            }
+                        });
+                        catePickView.setOnStateChangeListener(new PickView.OnStateChangeListener() {
+                            @Override
+                            public void OnStateChange(View view, boolean state) {
+                                Log.d("选择器2: ", (catePickView.isShow ? "打开" : "关闭"));
+                                System.out.println("catePickView isshow = " + catePickView.isShow);
+                            }
+                        });
                     } else {
                         loadingDialog.dismiss();
                         Toast.makeText(StudentAchievementActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
@@ -287,7 +344,7 @@ public class StudentAchievementActivity extends AppCompatActivity implements Ada
                     if (mDatas.size() > 0) {
                         mDatas.clear();
                     }
-                    initData(currentPage, "0");
+                    initData(currentPage, cid);
                     comprehensiveEvaluationAdapter.notifyDataSetChanged();
                     isRefresh = false;
                 }
