@@ -10,4 +10,5 @@
     <color name="text">#ffffff</color>
     <color name="dot_not_choose">#EEEEEE</color>
     <color name="text2">#666666</color>
+    <color name="text3"> #2E97F0 </color>
 </resources>

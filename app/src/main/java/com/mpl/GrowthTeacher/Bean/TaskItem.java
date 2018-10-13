@@ -1,39 +1,56 @@
 package com.mpl.GrowthTeacher.Bean;
 
+/*
+"id": "00153700053614900001000084330002",
+			"name": "我的运动会",
+			"type": "1",
+			"write_by_type": "1",
+			"image": "http:\/\/101.201.197.224\/getFile.php?f=6.png",
+			"category_name": "体育运动",
+			"label_name": "体育运动",
+			"status": "4",
+			"role": "student",
+			"updated_at": "1539246919",
+			"username": "邓吉州",
+			"classroom_id": "3",
+			"classroom_name": "二班",
+			"task_relation_id": "00153699652798000001000083750001",
+			"grade": "小学一年级"
+ */
 
 public class TaskItem {
     private String id;               //任务ID
-    private String type;             //类型， 1成就，2问卷 ,
-    private String task_type;       //任务类型
-    private String image;           //图片路径
-    private String name;            //标题
-    private String category_name;  // 分类名称
-    private String label_name;     //标签名称 ,
-    private String write_by_type; //填写人类型， 1各填一份，2共填一份
-    private String write_by;        //填写人, 1学生，2家长。3老师 ,
-    private String join_number;     // 参与人 ,
-    private String complete_number; //完成人 ,
-    private String start;             //开始时间 ,
-    private String end;                 //结束时间 ,
-    private String complete_rate;       //完成率 ,
-    private int countdown;              //距离截止有x天， -1 表示已过期
-    public boolean isCheck;             //选中
+    private String name;
+    private String type;
+    private String write_by_type;
+    private String image;
+    private String category_name;
+    private String label_name;
+    private String status;
+    private String role;
+    private String updated_at;
+    private String username;
+    private String classroom_id;
+    private String classroom_name;
+    private String task_relation_id;
+    private String grade;
 
-    public boolean isCheck() {
-        return isCheck;
-    }
-
-    public void setCheck(boolean check) {
-        isCheck = check;
-    }
-
-
+    //记录是否选中要删除
+    public boolean choosed = false;
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getType() {
@@ -44,12 +61,12 @@ public class TaskItem {
         this.type = type;
     }
 
-    public String getTask_type() {
-        return task_type;
+    public String getWrite_by_type() {
+        return write_by_type;
     }
 
-    public void setTask_type(String task_type) {
-        this.task_type = task_type;
+    public void setWrite_by_type(String write_by_type) {
+        this.write_by_type = write_by_type;
     }
 
     public String getImage() {
@@ -58,14 +75,6 @@ public class TaskItem {
 
     public void setImage(String image) {
         this.image = image;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getCategory_name() {
@@ -84,89 +93,88 @@ public class TaskItem {
         this.label_name = label_name;
     }
 
-    public String getWrite_by_type() {
-        return write_by_type;
+    public String getStatus() {
+        return status;
     }
 
-    public void setWrite_by_type(String write_by_type) {
-        this.write_by_type = write_by_type;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public String getWrite_by() {
-        return write_by;
+    public String getRole() {
+        return role;
     }
 
-    public void setWrite_by(String write_by) {
-        this.write_by = write_by;
+    public void setRole(String role) {
+        this.role = role;
     }
 
-    public String getJoin_number() {
-        return join_number;
+    public String getUpdated_at() {
+        return updated_at;
     }
 
-    public void setJoin_number(String join_number) {
-        this.join_number = join_number;
+    public void setUpdated_at(String updated_at) {
+        this.updated_at = updated_at;
     }
 
-    public String getComplete_number() {
-        return complete_number;
+    public String getUsername() {
+        return username;
     }
 
-    public void setComplete_number(String complete_number) {
-        this.complete_number = complete_number;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getStart() {
-        return start;
+    public String getClassroom_id() {
+        return classroom_id;
     }
 
-    public void setStart(String start) {
-        this.start = start;
+    public void setClassroom_id(String classroom_id) {
+        this.classroom_id = classroom_id;
     }
 
-    public String getEnd() {
-        return end;
+    public String getClassroom_name() {
+        return classroom_name;
     }
 
-    public void setEnd(String end) {
-        this.end = end;
+    public void setClassroom_name(String classroom_name) {
+        this.classroom_name = classroom_name;
     }
 
-    public String getComplete_rate() {
-        return complete_rate;
+    public String getTask_relation_id() {
+        return task_relation_id;
     }
 
-    public void setComplete_rate(String complete_rate) {
-        this.complete_rate = complete_rate;
+    public void setTask_relation_id(String task_relation_id) {
+        this.task_relation_id = task_relation_id;
     }
 
-    public int getCountdown() {
-        return countdown;
+    public String getGrade() {
+        return grade;
     }
 
-    public void setCountdown(int countdown) {
-        this.countdown = countdown;
+    public void setGrade(String grade) {
+        this.grade = grade;
     }
 
 
-    public TaskItem(String id, String type, String task_type, String image, String name, String category_name, String label_name,
-                    String write_by_type, String write_by, String join_number, String complete_number,
-                    String start, String end, String complete_rate, int countdown) {
+    public TaskItem(String id, String name, String type, String write_by_type, String image, String category_name, String label_name, String status,
+                    String role, String updated_at, String username, String classroom_id, String classroom_name, String task_relation_id, String grade) {
         this.id = id;
-        this.type = type;
-        this.task_type = task_type;
-        this.image = image;
         this.name = name;
+        this.type = type;
+        this.write_by_type = write_by_type;
+        this.image = image;
         this.category_name = category_name;
         this.label_name = label_name;
-        this.write_by_type = write_by_type;
-        this.write_by = write_by;
-        this.join_number = join_number;
-        this.complete_number = complete_number;
-        this.start = start;
-        this.end = end;
-        this.complete_rate = complete_rate;
-        this.countdown = countdown;
+        this.status = status;
+        this.role = role;
+        this.updated_at = updated_at;
+        this.username = username;
+        this.classroom_id = classroom_id;
+        this.classroom_name = classroom_name;
+        this.task_relation_id = task_relation_id;
+        this.grade = grade;
     }
 
 

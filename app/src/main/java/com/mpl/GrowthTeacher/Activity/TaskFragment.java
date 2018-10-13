@@ -12,12 +12,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.mpl.GrowthTeacher.Adapter.TaskFragmentAdapter;
+import com.mpl.GrowthTeacher.Bean.TaskItem;
 import com.mpl.GrowthTeacher.R;
 import com.mpl.GrowthTeacher.Tools.NetworkUtils;
 import com.mpl.GrowthTeacher.View.LoadMoreListView;
@@ -27,6 +31,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import cz.msebera.android.httpclient.Header;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -34,16 +41,19 @@ import static android.content.Context.MODE_PRIVATE;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TaskFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class TaskFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener {
     private ImageView ib_message;
     private LoadingDialog loadingDialog;
-    private TextView tv_check_more;
+    private TextView tv_check_more, tv_cancel, tv_commit;
     private LoadMoreListView listview;
     private String currentPage = "1";
     private int totalPage;
 
     private SwipeRefreshLayout mSwipeLayout;
     private boolean isRefresh = false;//是否刷新中
+
+    private List<TaskItem> mdatas = new ArrayList<>();
+    private TaskFragmentAdapter taskFragmentAdapter;
 
 
     public TaskFragment() {
@@ -68,6 +78,10 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Swip
         listview = root.findViewById(R.id.listview);
         tv_check_more = root.findViewById(R.id.tv_check_more);
         tv_check_more.setOnClickListener(this);
+        tv_cancel = root.findViewById(R.id.tv_cancel);
+        tv_cancel.setOnClickListener(this);
+        tv_commit = root.findViewById(R.id.tv_commit);
+        tv_commit.setOnClickListener(this);
         doGetTask(currentPage);
         listview.setOnLoadMoreListener(new LoadMoreListView.OnLoadMoreListener() {
             @Override
@@ -81,6 +95,7 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Swip
                 }
             }
         });
+        listview.setOnItemClickListener(this);
 
         //设置SwipeRefreshLayout
         mSwipeLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipeLayout);
@@ -125,6 +140,36 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Swip
                     int code = response.getInt("code");
                     if (code == 0) {
                         loadingDialog.dismiss();
+                        JSONObject data = response.getJSONObject("data");
+                        JSONArray list = data.getJSONArray("list");
+                        if (list.length() == 0) {
+                            View view = LinearLayout.inflate(getActivity(), R.layout.empty_view, null);
+                            listview.setEmptyView(view);
+                        } else {
+                            for (int i = 0; i < list.length(); i++) {
+                                JSONObject object = list.getJSONObject(i);
+                                String id = object.getString("id");
+                                String name = object.getString("name");
+                                String type = object.getString("type");
+                                String write_by_type = object.getString("write_by_type");
+                                String image = object.getString("image");
+                                String category_name = object.getString("category_name");
+                                String label_name = object.getString("label_name");
+                                String status = object.getString("status");
+                                String role = object.getString("role");
+                                String updated_at = object.getString("updated_at");
+                                String username = object.getString("username");
+                                String classroom_id = object.getString("classroom_id");
+                                String classroom_name = object.getString("classroom_name");
+                                String task_relation_id = object.getString("task_relation_id");
+                                String grade = object.getString("grade");
+                                TaskItem taskItem = new TaskItem(id, name, type, write_by_type, image, category_name, label_name, status, role,
+                                        updated_at, username, classroom_id, classroom_name, task_relation_id, grade);
+                                mdatas.add(taskItem);
+                            }
+                            taskFragmentAdapter = new TaskFragmentAdapter(getActivity(), mdatas);
+                            listview.setAdapter(taskFragmentAdapter);
+                        }
 
                     } else {
                         loadingDialog.dismiss();
@@ -171,8 +216,28 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Swip
                 startActivity(intent);
                 break;
             case R.id.tv_check_more:
-                Intent intent1 = new Intent(getActivity(), CheckMoreTaskActivity.class);
-                startActivity(intent1);
+//                Intent intent1 = new Intent(getActivity(), CheckMoreTaskActivity.class);
+//                startActivity(intent1);
+                taskFragmentAdapter.setCanChoose(true);
+                tv_check_more.setVisibility(View.INVISIBLE);
+                tv_cancel.setVisibility(View.VISIBLE);
+                tv_commit.setVisibility(View.VISIBLE);
+                ib_message.setVisibility(View.INVISIBLE);
+                break;
+            case R.id.tv_commit:
+                taskFragmentAdapter.delete();
+                taskFragmentAdapter.setCanChoose(false);
+                tv_check_more.setVisibility(View.VISIBLE);
+                tv_cancel.setVisibility(View.INVISIBLE);
+                tv_commit.setVisibility(View.INVISIBLE);
+                ib_message.setVisibility(View.VISIBLE);
+                break;
+            case R.id.tv_cancel:
+                taskFragmentAdapter.setCanChoose(false);
+                tv_check_more.setVisibility(View.VISIBLE);
+                tv_cancel.setVisibility(View.INVISIBLE);
+                tv_commit.setVisibility(View.INVISIBLE);
+                ib_message.setVisibility(View.VISIBLE);
                 break;
         }
     }
@@ -189,14 +254,19 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Swip
                     //显示或隐藏刷新进度条
                     mSwipeLayout.setRefreshing(false);
                     //修改adapter的数据
-//                    if (mDatas.size() > 0) {
-//                        mDatas.clear();
-//                    }
+                    if (mdatas.size() > 0) {
+                        mdatas.clear();
+                    }
                     doGetTask(currentPage);
-//                    comprehensiveEvaluationAdapter.notifyDataSetChanged();
+                    taskFragmentAdapter.notifyDataSetChanged();
                     isRefresh = false;
                 }
             }, 3000);
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        taskFragmentAdapter.choose(position);
     }
 }
