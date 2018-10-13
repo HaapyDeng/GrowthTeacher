@@ -51,7 +51,7 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
-public class TaskStatisticActivity extends AppCompatActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener, TaskStatisticAdapter.Callback {
+public class TaskStatisticActivity extends AppCompatActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener {
     private TextView tv_choose;
     private LinearLayout back;
     private LoadMoreListView listview;
@@ -184,7 +184,6 @@ public class TaskStatisticActivity extends AppCompatActivity implements View.OnC
             }
         });
 
-        listview.setOnItemClickListener(this);
         //设置SwipeRefreshLayout
         mSwipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipeLayout);
         //设置进度条的颜色主题，最多能设置四种 加载颜色是循环播放的，只要没有完成刷新就会一直循环
@@ -252,7 +251,34 @@ public class TaskStatisticActivity extends AppCompatActivity implements View.OnC
                                 TaskStatisticItem taskStatisticItem = new TaskStatisticItem(id, task_type, image, name, category_name, label_name, complete_rate, countdown);
                                 mDatas.add(taskStatisticItem);
                             }
-                            taskStatisticAdapter = new TaskStatisticAdapter(TaskStatisticActivity.this, mDatas, TaskStatisticActivity.this);
+                            taskStatisticAdapter = new TaskStatisticAdapter(TaskStatisticActivity.this, mDatas);
+                            taskStatisticAdapter.setOnClickMyTextView(new TaskStatisticAdapter.OnClickMyTextView() {
+                                @Override
+                                public void myTextViewClick(View view, int position) {
+                                    switch (view.getId()) {
+                                        case R.id.tv_info:
+                                            Log.d("111", "" + position);
+                                            String id = mDatas.get(position).getId();
+                                            Intent intent = new Intent(TaskStatisticActivity.this, TaskShowInfoActivity.class);
+                                            Bundle bundle = new Bundle();
+                                            bundle.putString("id", id);
+                                            intent.putExtras(bundle);
+                                            startActivity(intent);
+                                            break;
+                                        case R.id.tv_tongji:
+                                            Log.d("222", "" + position);
+                                            String id2 = mDatas.get(position).getId();
+                                            String name = mDatas.get(position).getName();
+                                            Intent intent2 = new Intent(TaskStatisticActivity.this, TaskCompletStatActivity.class);
+                                            Bundle bundle2 = new Bundle();
+                                            bundle2.putString("id", id2);
+                                            bundle2.putString("name", name);
+                                            intent2.putExtras(bundle2);
+                                            startActivity(intent2);
+                                            break;
+                                    }
+                                }
+                            });
                             listview.setAdapter(taskStatisticAdapter);
                         }
                     } else {
@@ -500,25 +526,8 @@ public class TaskStatisticActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         Log.d("333", "333");
-        String id = mDatas.get(i).getId();
-        Intent intent = new Intent(this, TaskShowInfoActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("id", id);
-        intent.putExtras(bundle);
-        startActivity(intent);
 
-    }
 
-    @Override
-    public void click(View v) {
-        switch (v.getId()) {
-            case R.id.tv_info:
-                Log.d("1111", "111");
-                break;
-            case R.id.tv_tongji:
-                Log.d("222", "222");
-                break;
-        }
     }
 
 
@@ -659,4 +668,5 @@ public class TaskStatisticActivity extends AppCompatActivity implements View.OnC
             }
         });
     }
+
 }

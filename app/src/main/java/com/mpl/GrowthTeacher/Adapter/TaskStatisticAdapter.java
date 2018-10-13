@@ -3,7 +3,6 @@ package com.mpl.GrowthTeacher.Adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mpl.GrowthTeacher.Bean.ComprehensiveEvaluationItem;
 import com.mpl.GrowthTeacher.Bean.TaskStatisticItem;
 import com.mpl.GrowthTeacher.R;
 import com.mpl.GrowthTeacher.Tools.DownImage;
@@ -20,28 +18,30 @@ import com.mpl.GrowthTeacher.View.CircleImageView;
 import java.util.List;
 
 
-public class TaskStatisticAdapter extends BaseAdapter implements View.OnClickListener {
+public class TaskStatisticAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private List<TaskStatisticItem> mDatas;
     private Context mContext;
-    private Callback mCallback;
+    private OnClickMyTextView mOnClickMyTextView;
+
 
     /**
      * 25      * 自定义接口，用于回调按钮点击事件到Activity
-     * 26      * @author Ivan Xu
-     * 27      * 2014-11-26
      * 28
      */
-    public interface Callback {
-        public void click(View v);
+    //接口回调
+    public interface OnClickMyTextView {
+        public void myTextViewClick(View view, int position);
     }
 
+    public void setOnClickMyTextView(OnClickMyTextView onClickMyTextView) {
+        mOnClickMyTextView = onClickMyTextView;
+    }
 
-    public TaskStatisticAdapter(Context context, List<TaskStatisticItem> datas,Callback callback) {
+    public TaskStatisticAdapter(Context context, List<TaskStatisticItem> datas) {
         mContext = context;
         mInflater = LayoutInflater.from(context);
         mDatas = datas;
-        mCallback = callback;
     }
 
     @Override
@@ -61,7 +61,7 @@ public class TaskStatisticAdapter extends BaseAdapter implements View.OnClickLis
 
     @SuppressLint("NewApi")
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
 //        if (convertView == null) {
         convertView = mInflater.inflate(R.layout.task_statistic_item, parent, false); //加载布局
@@ -117,14 +117,19 @@ public class TaskStatisticAdapter extends BaseAdapter implements View.OnClickLis
         holder.tv_catgray_name.setText(taskStatisticItem.getCategory_name());
         holder.tv_lable_name.setText(taskStatisticItem.getLabel_name());
         holder.tv_end_time.setText("距离截止还有" + taskStatisticItem.getCountdown() + "天");
-        holder.tv_tongji.setOnClickListener(this);
-        holder.tv_info.setOnClickListener(this);
+        holder.tv_tongji.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mOnClickMyTextView.myTextViewClick(view, position);
+            }
+        });
+        holder.tv_info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mOnClickMyTextView.myTextViewClick(view, position);
+            }
+        });
         return convertView;
-    }
-
-    @Override
-    public void onClick(View view) {
-        mCallback.click(view);
     }
 
 

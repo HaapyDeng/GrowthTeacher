@@ -189,7 +189,9 @@
         <activity android:name=".Activity.StudentAchievementActivity" />
         <activity android:name=".Activity.StudentAchievementItemDetailActivity" />
         <activity android:name=".Activity.TaskStatisticActivity" />
-        <activity android:name=".Activity.TaskShowInfoActivity"></activity>
+        <activity android:name=".Activity.TaskShowInfoActivity" />
+        <activity android:name=".Activity.TaskCheckInfoActivity" />
+        <activity android:name=".Activity.TaskCompletStatActivity"></activity>
     </application>
 
 </manifest>
