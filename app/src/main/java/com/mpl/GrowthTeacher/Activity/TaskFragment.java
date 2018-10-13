@@ -75,7 +75,6 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Swip
                 int i = Integer.parseInt(currentPage);
                 Log.d("i==>>", "" + i);
                 if (i < totalPage) {
-//                    initMoreData("" + (i + 1), choose_start_time, choose_end_time, categoryid, lableid);
                     doGetTask("" + (i + 1));
                 } else {
                     listview.setLoadCompleted();
@@ -113,7 +112,7 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Swip
         }
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("myinfo", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
-        String url = getResources().getString(R.string.local_url) + "/v1/task/" + "0/" + "0/" + "0/" + "0" + "?page=" + page;
+        String url = getResources().getString(R.string.local_url) + "/v1/achievement" + "?page=" + page;
         Log.d("url==>>", url);
         AsyncHttpClient client = new AsyncHttpClient();
         client.addHeader("X-Api-Token", token);
@@ -126,6 +125,7 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Swip
                     int code = response.getInt("code");
                     if (code == 0) {
                         loadingDialog.dismiss();
+
                     } else {
                         loadingDialog.dismiss();
                         Toast.makeText(getActivity(), response.getString("message"), Toast.LENGTH_LONG).show();
@@ -192,8 +192,8 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Swip
 //                    if (mDatas.size() > 0) {
 //                        mDatas.clear();
 //                    }
-//                   doGetTask("1");
-//                    taskStatisticAdapter.notifyDataSetChanged();
+                    doGetTask(currentPage);
+//                    comprehensiveEvaluationAdapter.notifyDataSetChanged();
                     isRefresh = false;
                 }
             }, 3000);
