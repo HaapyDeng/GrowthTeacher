@@ -37,10 +37,11 @@ public class TaskStatisticAdapter extends BaseAdapter implements View.OnClickLis
     }
 
 
-    public TaskStatisticAdapter(Context context, List<TaskStatisticItem> datas) {
+    public TaskStatisticAdapter(Context context, List<TaskStatisticItem> datas,Callback callback) {
         mContext = context;
         mInflater = LayoutInflater.from(context);
         mDatas = datas;
+        mCallback = callback;
     }
 
     @Override
@@ -62,27 +63,27 @@ public class TaskStatisticAdapter extends BaseAdapter implements View.OnClickLis
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
-        if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.comprehensive_evaluation_item, parent, false); //加载布局
-            holder = new ViewHolder();
-            holder.img_head = convertView.findViewById(R.id.img_head);
-            holder.tv_name = convertView.findViewById(R.id.tv_name);
-            holder.tv_rate = convertView.findViewById(R.id.tv_rate);
-            holder.iv_catgray_img = convertView.findViewById(R.id.iv_catgray_img);
-            holder.tv_catgray_name = convertView.findViewById(R.id.tv_catgray_name);
-            holder.iv_lab_img = convertView.findViewById(R.id.iv_lab_img);
-            holder.tv_lable_name = convertView.findViewById(R.id.tv_lable_name);
-            holder.tv_end_time = convertView.findViewById(R.id.tv_end_time);
-            holder.tv_tongji = convertView.findViewById(R.id.tv_tongji);
-            holder.tv_info = convertView.findViewById(R.id.tv_info);
+//        if (convertView == null) {
+        convertView = mInflater.inflate(R.layout.task_statistic_item, parent, false); //加载布局
+        holder = new ViewHolder();
+        holder.img_head = convertView.findViewById(R.id.img_head);
+        holder.tv_name = convertView.findViewById(R.id.tv_name);
+        holder.tv_rate = convertView.findViewById(R.id.tv_rate);
+        holder.iv_catgray_img = convertView.findViewById(R.id.iv_catgray_img);
+        holder.tv_catgray_name = convertView.findViewById(R.id.tv_catgray_name);
+        holder.iv_lab_img = convertView.findViewById(R.id.iv_lab_img);
+        holder.tv_lable_name = convertView.findViewById(R.id.tv_lable_name);
+        holder.tv_end_time = convertView.findViewById(R.id.tv_end_time);
+        holder.tv_tongji = convertView.findViewById(R.id.tv_tongji);
+        holder.tv_info = convertView.findViewById(R.id.tv_info);
 
-        } else {   //else里面说明，convertView已经被复用了，说明convertView中已经设置过tag了，即holder
-            holder = (ViewHolder) convertView.getTag();
-        }
+//        } else {   //else里面说明，convertView已经被复用了，说明convertView中已经设置过tag了，即holder
+//            holder = (ViewHolder) convertView.getTag();
+//        }
         TaskStatisticItem taskStatisticItem = mDatas.get(position);
         if (taskStatisticItem.getImage().length() == 0) {
-            Drawable drawable0 = mContext.getResources().getDrawable(R.mipmap.achieve_default);
-            holder.img_head.setImageDrawable(drawable0);
+//            Drawable drawable0 = mContext.getResources().getDrawable(R.mipmap.achieve_default);
+//            holder.img_head.setImageDrawable(drawable0);
         } else {
             DownImage downImage = new DownImage(taskStatisticItem.getImage());
             final ViewHolder finalHolder = holder;

@@ -188,7 +188,8 @@
         <activity android:name=".Activity.GetScoreInfoInfoActivity" />
         <activity android:name=".Activity.StudentAchievementActivity" />
         <activity android:name=".Activity.StudentAchievementItemDetailActivity" />
-        <activity android:name=".Activity.TaskStatisticActivity"></activity>
+        <activity android:name=".Activity.TaskStatisticActivity" />
+        <activity android:name=".Activity.TaskShowInfoActivity"></activity>
     </application>
 
 </manifest>

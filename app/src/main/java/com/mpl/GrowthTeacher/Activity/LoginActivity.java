@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void initView() {
         TextView app_version = findViewById(R.id.app_version);
         try {
-            app_version.setText(NetworkUtils.getVersionName(this));
+            app_version.setText("校园端" + NetworkUtils.getVersionName(this));
         } catch (Exception e) {
             e.printStackTrace();
         }
