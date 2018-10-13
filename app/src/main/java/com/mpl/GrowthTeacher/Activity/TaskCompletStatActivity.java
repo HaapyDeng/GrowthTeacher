@@ -19,19 +19,25 @@ import android.widget.Toast;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.mpl.GrowthTeacher.Adapter.TaskStatisticAdapter;
+import com.mpl.GrowthTeacher.Bean.ChooseItemBean;
 import com.mpl.GrowthTeacher.Bean.TaskStatisticItem;
 import com.mpl.GrowthTeacher.R;
 import com.mpl.GrowthTeacher.Tools.NetworkUtils;
 import com.mpl.GrowthTeacher.View.LoadingDialog;
+import com.yangchangfu.pickview_lib.Item;
+import com.yangchangfu.pickview_lib.PickView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import cz.msebera.android.httpclient.Header;
 
 public class TaskCompletStatActivity extends AppCompatActivity implements View.OnClickListener {
-    private String id, name;
+    private String task_id, name;
     private LinearLayout back;
     private TextView tv_task_name, tv_task_rate, tv_complet, tv_total, tv_ctext, tv_notctext, tv_choose_text, tv_choose;
     private LinearLayout fragment;
@@ -44,13 +50,18 @@ public class TaskCompletStatActivity extends AppCompatActivity implements View.O
 
     private String task_rate, complet, total;
 
+    private List<Item> cates;
+    private List<ChooseItemBean> chooseItemBeans;
+    private PickView catePickView;
+    private String cid = "0";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_complet_stat);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        id = bundle.getString("id");
+        task_id = bundle.getString("id");
         name = bundle.getString("name");
 
         back = findViewById(R.id.back);
@@ -75,7 +86,8 @@ public class TaskCompletStatActivity extends AppCompatActivity implements View.O
         editor.putString("cid", "0");
         editor.commit();
         selectFragment(0);
-        initData(id, "0", "0");
+        initData(task_id, "0", cid);
+
     }
 
     private void initData(String id, String type, String cid) {
@@ -179,7 +191,7 @@ public class TaskCompletStatActivity extends AppCompatActivity implements View.O
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-        hideFragment(transaction);
+//        hideFragment(transaction);
 
         changeView(i);// 设置选项颜色
 
@@ -190,13 +202,12 @@ public class TaskCompletStatActivity extends AppCompatActivity implements View.O
                 if (fragment1 == null) {
 
                     fragment1 = new TaskCompletBlankFragment();
-
-                    transaction.add(R.id.fragment, fragment1);
-
                 }
-//                Bundle bundle = new Bundle();
-//                bundle.putString("studentId", studentId);
-//                fragment1.setArguments(bundle);
+                transaction.replace(R.id.fragment, fragment1);
+                Bundle bundle = new Bundle();
+                bundle.putString("task_id", task_id);
+                bundle.putString("cid", cid);
+                fragment1.setArguments(bundle);
 
                 transaction.show(fragment1);
 
@@ -208,13 +219,12 @@ public class TaskCompletStatActivity extends AppCompatActivity implements View.O
                 if (fragment2 == null) {
 
                     fragment2 = new TaskNotCompletFragment();
-
-                    transaction.add(R.id.fragment, fragment2);
-
                 }
-//                Bundle bundle2 = new Bundle();
-//                bundle2.putString("studentId", studentId);
-//                fragment2.setArguments(bundle2);
+                transaction.replace(R.id.fragment, fragment2);
+                Bundle bundle2 = new Bundle();
+                bundle2.putString("task_id", task_id);
+                bundle2.putString("cid", cid);
+                fragment2.setArguments(bundle2);
 
                 transaction.show(fragment2);
 
@@ -288,7 +298,115 @@ public class TaskCompletStatActivity extends AppCompatActivity implements View.O
                 selectFragment(1);
                 break;
             case R.id.tv_choose:
+                initCates();
+
                 break;
         }
+    }
+
+    private void initCates() {
+        loadingDialog = new LoadingDialog(this, "加载中...", R.drawable.ic_dialog_loading);
+        loadingDialog.show();
+        if (NetworkUtils.checkNetWork(this) == false) {
+            loadingDialog.dismiss();
+            Toast.makeText(this, R.string.no_network, Toast.LENGTH_LONG).show();
+            return;
+        }
+        SharedPreferences sharedPreferences = this.getSharedPreferences("myinfo", MODE_PRIVATE);
+        String token = sharedPreferences.getString("token", "");
+        String url = getResources().getString(R.string.local_url) + "/v1/school/classroom";
+        Log.d("url==>>", url);
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.addHeader("X-Api-Token", token);
+        client.get(url, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                Log.d("response==>>", response.toString());
+                try {
+                    int code = response.getInt("code");
+                    if (code == 0) {
+                        loadingDialog.dismiss();
+                        List<Item> items = new ArrayList<>();
+                        JSONArray data = response.getJSONArray("data");
+                        for (int i = 0; i < data.length(); i++) {
+                            Item item = new Item();
+                            JSONObject object = data.getJSONObject(i);
+                            item.name = object.getString("name");
+                            List<Item> items1 = new ArrayList<>();
+                            JSONArray grade = object.getJSONArray("item");
+                            chooseItemBeans = new ArrayList<ChooseItemBean>();
+                            for (int j = 0; j < grade.length(); j++) {
+                                JSONObject object2 = grade.getJSONObject(j);
+                                Item item1 = new Item();
+                                item1.name = object2.getString("name");
+                                String id = object2.getString("id");
+                                ChooseItemBean bean = new ChooseItemBean(id, item1.name);
+                                chooseItemBeans.add(bean);
+                                items1.add(item1);
+                            }
+                            item.items = items1;
+                            items.add(item);
+                        }
+                        TaskCompletStatActivity.this.cates = items;
+                        catePickView = new PickView(TaskCompletStatActivity.this);
+                        catePickView.setPickerView(cates, PickView.Style.DOUBLE);
+                        catePickView.setShowSelectedTextView(false);
+                        catePickView.show();
+                        catePickView.setOnSelectListener(new PickView.OnSelectListener() {
+                            @Override
+                            public void OnSelectItemClick(View view, int[] selectedIndexs, String selectedText) {
+                                all = selectedText;
+                                Log.d("selectedText==>>", selectedText);
+                                for (int i = 0; i < chooseItemBeans.size(); i++) {
+                                    if ((selectedText.substring(selectedText.length() - 2)).equals(chooseItemBeans.get(i).getName())) {
+                                        cid = chooseItemBeans.get(i).getId();
+                                        Log.d("cid==>>", cid);
+                                        initData(task_id, "0", cid);
+                                    }
+                                }
+                            }
+                        });
+                        catePickView.setOnStateChangeListener(new PickView.OnStateChangeListener() {
+                            @Override
+                            public void OnStateChange(View view, boolean state) {
+                                Log.d("选择器2: ", (catePickView.isShow ? "打开" : "关闭"));
+                                System.out.println("catePickView isshow = " + catePickView.isShow);
+                            }
+                        });
+                    } else {
+                        loadingDialog.dismiss();
+                        Toast.makeText(TaskCompletStatActivity.this, response.getString("message"), Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                loadingDialog.dismiss();
+                Toast.makeText(TaskCompletStatActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                super.onFailure(statusCode, headers, responseString, throwable);
+                loadingDialog.dismiss();
+                Toast.makeText(TaskCompletStatActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                loadingDialog.dismiss();
+                Toast.makeText(TaskCompletStatActivity.this, R.string.no_network, Toast.LENGTH_LONG).show();
+                return;
+            }
+        });
     }
 }
