@@ -14,6 +14,8 @@ import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.mpl.GrowthTeacher.Adapter.StudentTaskAdapter;
+import com.mpl.GrowthTeacher.Bean.StudentTaskItem;
 import com.mpl.GrowthTeacher.R;
 import com.mpl.GrowthTeacher.Tools.NetworkUtils;
 import com.mpl.GrowthTeacher.View.LoadingDialog;
@@ -21,6 +23,9 @@ import com.mpl.GrowthTeacher.View.LoadingDialog;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -34,6 +39,8 @@ public class TaskNotCompletFragment extends Fragment {
     private ListView listview;
     private LinearLayout ll_empty;
     private LoadingDialog loadingDialog;
+    List<StudentTaskItem> mdata = new ArrayList<>();
+    StudentTaskAdapter studentTaskAdapter;
 
     public TaskNotCompletFragment() {
         // Required empty public constructor
@@ -49,6 +56,9 @@ public class TaskNotCompletFragment extends Fragment {
         cid = bundle.getString("cid");
         View root = inflater.inflate(R.layout.fragment_task_not_complet, container, false);
         listview = root.findViewById(R.id.listview);
+        if (mdata.size() > 0) {
+            mdata.clear();
+        }
         initData(task_id, "2", cid);
         return root;
     }
@@ -76,8 +86,26 @@ public class TaskNotCompletFragment extends Fragment {
                     int code = response.getInt("code");
                     if (code == 0) {
                         loadingDialog.dismiss();
-                        View view = View.inflate(getActivity(), R.layout.empty_view, null);
-                        listview.setEmptyView(view);
+                        JSONObject data = response.getJSONObject("data");
+                        JSONArray list = data.getJSONArray("list");
+                        if (list.length() == 0) {
+                            View view = View.inflate(getActivity(), R.layout.empty_view, null);
+                            listview.setEmptyView(view);
+                        } else {
+                            for (int i = 0; i < list.length(); i++) {
+                                JSONObject object = list.getJSONObject(i);
+                                String username = object.getString("username");
+                                String classroom_id = object.getString("classroom_id");
+                                String status = object.getString("status");
+                                String updated_at = object.getString("updated_at");
+                                String gender = object.getString("gender");
+                                String grade = object.getString("grade");
+                                StudentTaskItem studentTaskItem = new StudentTaskItem(username, classroom_id, status, updated_at, gender, grade);
+                                mdata.add(studentTaskItem);
+                            }
+                            studentTaskAdapter = new StudentTaskAdapter(getActivity(), mdata);
+                            listview.setAdapter(studentTaskAdapter);
+                        }
                     } else {
                         loadingDialog.dismiss();
                         Toast.makeText(getActivity(), response.getString("message"), Toast.LENGTH_LONG).show();
