@@ -194,7 +194,9 @@
         <activity android:name=".Activity.TaskCompletStatActivity" />
         <activity android:name=".Activity.ReviewWenZiActivity" />
         <activity android:name=".Activity.ReviewTuWenActivity" />
-        <activity android:name=".Activity.ReviewVideoActivity"></activity>
+        <activity android:name=".Activity.ReviewVideoActivity" />
+        <activity android:name=".Activity.ReviewSystemActivity" />
+        <activity android:name=".Activity.ReviewPsqActivity"></activity>
     </application>
 
 </manifest>

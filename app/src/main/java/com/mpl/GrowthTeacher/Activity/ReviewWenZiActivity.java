@@ -50,7 +50,7 @@ public class ReviewWenZiActivity extends Activity {
         }
         SharedPreferences sharedPreferences = this.getSharedPreferences("myinfo", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
-        String url = getResources().getString(R.string.local_url) + "/v1/achievement/video/show/" + taskId;
+        String url = getResources().getString(R.string.local_url) + "/v1/achievement/system/show/" + taskId;
         Log.d("url==>>", url);
         AsyncHttpClient client = new AsyncHttpClient();
         client.addHeader("X-Api-Token", token);

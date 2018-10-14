@@ -105,6 +105,9 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Swip
         tv_cancel.setOnClickListener(this);
         tv_commit = root.findViewById(R.id.tv_commit);
         tv_commit.setOnClickListener(this);
+        if (mdatas.size() > 0) {
+            mdatas.clear();
+        }
         doGetTask(currentPage);
         listview.setOnLoadMoreListener(new LoadMoreListView.OnLoadMoreListener() {
             @Override
@@ -592,6 +595,7 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Swip
             Bundle bundle = new Bundle();
             bundle.putString("taskId", taskId);
             String type = mdatas.get(position).getType();
+
             if (type.equals("1")) {
                 Intent intent1 = new Intent(getActivity(), ReviewWenZiActivity.class);
                 intent1.putExtras(bundle);
@@ -604,6 +608,14 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Swip
                 Intent intent3 = new Intent(getActivity(), ReviewVideoActivity.class);
                 intent3.putExtras(bundle);
                 startActivity(intent3);
+            } else if (type.equals("4")) {
+                Intent intent4 = new Intent(getActivity(), ReviewPsqActivity.class);
+                intent4.putExtras(bundle);
+                startActivity(intent4);
+            } else if (type.equals("5")) {
+                Intent intent5 = new Intent(getActivity(), ReviewSystemActivity.class);
+                intent5.putExtras(bundle);
+                startActivity(intent5);
             }
 
         }
