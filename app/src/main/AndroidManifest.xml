@@ -196,7 +196,8 @@
         <activity android:name=".Activity.ReviewTuWenActivity" />
         <activity android:name=".Activity.ReviewVideoActivity" />
         <activity android:name=".Activity.ReviewSystemActivity" />
-        <activity android:name=".Activity.ReviewPsqActivity"></activity>
+        <activity android:name=".Activity.ReviewPsqActivity" />
+        <activity android:name=".Activity.VideoPlayActivity"></activity>
     </application>
 
 </manifest>
