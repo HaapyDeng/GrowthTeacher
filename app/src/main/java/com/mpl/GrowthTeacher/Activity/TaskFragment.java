@@ -167,6 +167,7 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Swip
                     if (code == 0) {
                         loadingDialog.dismiss();
                         JSONObject data = response.getJSONObject("data");
+                        totalPage = data.getInt("totalPage");
                         JSONArray list = data.getJSONArray("list");
                         if (list.length() == 0) {
                             View view = LinearLayout.inflate(getActivity(), R.layout.empty_view, null);
@@ -195,6 +196,7 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Swip
                             }
                             taskFragmentAdapter = new TaskFragmentAdapter(getActivity(), mdatas);
                             listview.setAdapter(taskFragmentAdapter);
+                            listview.setLoadCompleted();
                         }
 
                     } else {
@@ -608,14 +610,14 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Swip
                 Intent intent3 = new Intent(getActivity(), ReviewVideoActivity.class);
                 intent3.putExtras(bundle);
                 startActivity(intent3);
-            } else if (type.equals("4")) {
-                Intent intent4 = new Intent(getActivity(), ReviewPsqActivity.class);
-                intent4.putExtras(bundle);
-                startActivity(intent4);
-            } else if (type.equals("5")) {
-                Intent intent5 = new Intent(getActivity(), ReviewSystemActivity.class);
-                intent5.putExtras(bundle);
-                startActivity(intent5);
+//            } else if (type.equals("4")) {
+//                Intent intent4 = new Intent(getActivity(), ReviewPsqActivity.class);
+//                intent4.putExtras(bundle);
+//                startActivity(intent4);
+//            } else if (type.equals("5")) {
+//                Intent intent5 = new Intent(getActivity(), ReviewSystemActivity.class);
+//                intent5.putExtras(bundle);
+//                startActivity(intent5);
             }
 
         }
