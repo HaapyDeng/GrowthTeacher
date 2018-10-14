@@ -191,7 +191,10 @@
         <activity android:name=".Activity.TaskStatisticActivity" />
         <activity android:name=".Activity.TaskShowInfoActivity" />
         <activity android:name=".Activity.TaskCheckInfoActivity" />
-        <activity android:name=".Activity.TaskCompletStatActivity"></activity>
+        <activity android:name=".Activity.TaskCompletStatActivity" />
+        <activity android:name=".Activity.ReviewWenZiActivity" />
+        <activity android:name=".Activity.ReviewTuWenActivity" />
+        <activity android:name=".Activity.ReviewVideoActivity"></activity>
     </application>
 
 </manifest>

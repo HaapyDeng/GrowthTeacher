@@ -17,6 +17,7 @@ import com.mpl.GrowthTeacher.Tools.DelteableInterface;
 import com.mpl.GrowthTeacher.Tools.DownImage;
 import com.mpl.GrowthTeacher.View.CircleImageView;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -24,6 +25,13 @@ public class TaskFragmentAdapter extends BaseAdapter implements DelteableInterfa
     private LayoutInflater mInflater;
     private List<TaskItem> mDatas;
     private Context mContext;
+
+    private boolean canChoose = false;
+
+    public void setCanChoose(Boolean canChoose) {
+        this.canChoose = canChoose;
+        notifyDataSetChanged();
+    }
 
     public TaskFragmentAdapter(Context context, List<TaskItem> datas) {
         mContext = context;
@@ -38,7 +46,7 @@ public class TaskFragmentAdapter extends BaseAdapter implements DelteableInterfa
 
     @Override
     public TaskItem getItem(int position) {
-        return mDatas.get(position % mDatas.size());
+        return mDatas.get(position);
     }
 
     @Override
@@ -124,9 +132,9 @@ public class TaskFragmentAdapter extends BaseAdapter implements DelteableInterfa
         }
         final TaskItem bean = getItem(position);
         if (bean.choosed) {
-            holder.iv_choose.setImageResource(R.drawable.choose_scope_shape);
+            holder.iv_choose.setBackground(mContext.getResources().getDrawable(R.mipmap.checkbox_unselected_normal));
         } else {
-            holder.iv_choose.setImageResource(R.drawable.not_choose_scope_shape);
+            holder.iv_choose.setBackground(mContext.getResources().getDrawable(R.mipmap.checkbox_selected_normal));
         }
         return convertView;
     }
@@ -151,11 +159,30 @@ public class TaskFragmentAdapter extends BaseAdapter implements DelteableInterfa
 
     }
 
-    private boolean canChoose = false;
+    @Override
+    public int chooseCount() {
+        int count = 0;
+        Iterator<TaskItem> iterator = mDatas.iterator();
+        while (iterator.hasNext()) {
+            TaskItem taskItem = iterator.next();
+            if (taskItem.choosed) {
+                count = count + 1;
+            }
+        }
+        return count;
+    }
 
-    public void setCanChoose(Boolean canChoose) {
-        this.canChoose = canChoose;
-        notifyDataSetChanged();
+    @Override
+    public ArrayList<String> chooseId() {
+        ArrayList<String> idList = new ArrayList<>();
+        Iterator<TaskItem> iterator = mDatas.iterator();
+        while (iterator.hasNext()) {
+            TaskItem taskItem = iterator.next();
+            if (taskItem.choosed) {
+                idList.add(taskItem.getId());
+            }
+        }
+        return idList;
     }
 
     private class ViewHolder {
