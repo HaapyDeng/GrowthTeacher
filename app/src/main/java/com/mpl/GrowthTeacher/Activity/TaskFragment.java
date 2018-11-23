@@ -116,6 +116,7 @@ public class TaskFragment extends Fragment implements View.OnClickListener, Swip
                 Log.d("i==>>", "" + i);
                 if (i < totalPage) {
                     doGetTask("" + (i + 1));
+                    listview.setLoadCompleted();
                 } else {
                     listview.setLoadCompleted();
                 }
