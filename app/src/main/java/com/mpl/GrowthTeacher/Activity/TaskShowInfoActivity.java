@@ -25,6 +25,9 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 小助手 - 任务统计 - 任务 - 详情
+ */
 public class TaskShowInfoActivity extends Activity {
     private String id;
     private LinearLayout back;

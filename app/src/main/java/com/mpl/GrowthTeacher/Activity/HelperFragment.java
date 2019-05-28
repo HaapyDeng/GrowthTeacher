@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.mpl.GrowthTeacher.R;
 
 /**
+ * 小助手模块
  * A simple {@link Fragment} subclass.
  */
 public class HelperFragment extends Fragment implements View.OnClickListener {

@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import com.mpl.GrowthTeacher.R;
 
 /**
+ * 学生圈模块
  * A simple {@link Fragment} subclass.
  */
 public class StudentGroupFragment extends Fragment implements View.OnClickListener {

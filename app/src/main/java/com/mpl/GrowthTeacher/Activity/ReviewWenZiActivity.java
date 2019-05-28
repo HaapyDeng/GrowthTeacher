@@ -40,6 +40,9 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 批改文字成就
+ */
 public class ReviewWenZiActivity extends Activity implements View.OnClickListener {
     private String taskId;
     private LoadingDialog loadingDialog;

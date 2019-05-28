@@ -37,6 +37,9 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 学生成就
+ */
 public class StudentAchievementActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private TextView tv_choose, tv_total;
@@ -221,6 +224,9 @@ public class StudentAchievementActivity extends AppCompatActivity implements Ada
         }
     }
 
+    /**
+     * 获取分类
+     */
     private void initCates() {
         loadingDialog = new LoadingDialog(this, "加载中...", R.drawable.ic_dialog_loading);
         loadingDialog.show();

@@ -42,6 +42,9 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 批改视频成就
+ */
 public class ReviewVideoActivity extends Activity implements View.OnClickListener {
     private LinearLayout back, ll_open;
     private TextView tv_name, tv_g_class, tv_time, tv_labe, tv_content;

@@ -25,6 +25,9 @@ import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 修改密码
+ */
 public class ChangePsdActivity extends AppCompatActivity {
     private LinearLayout back;
     private EditText et_oldpassword, et_newpassword, et_newpasswordagain;

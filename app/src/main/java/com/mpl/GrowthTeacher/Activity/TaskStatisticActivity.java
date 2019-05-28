@@ -51,6 +51,9 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 小助手 - 任务统计 - 列表
+ */
 public class TaskStatisticActivity extends AppCompatActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener {
     private TextView tv_choose;
     private LinearLayout back;

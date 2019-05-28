@@ -39,6 +39,9 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 批改图文成就
+ */
 public class ReviewTuWenActivity extends Activity implements View.OnClickListener {
     private LinearLayout back, ll_open;
     private TextView tv_name, tv_g_class, tv_time, tv_labe, tv_content;

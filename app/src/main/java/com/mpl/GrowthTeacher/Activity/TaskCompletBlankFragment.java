@@ -33,6 +33,7 @@ import cz.msebera.android.httpclient.Header;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
+ * 小助手 - 任务统计 - 任务 - 用户 - 列表 - 完成
  * A simple {@link Fragment} subclass.
  */
 public class TaskCompletBlankFragment extends Fragment {

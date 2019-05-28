@@ -49,6 +49,7 @@ import cz.msebera.android.httpclient.Header;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
+ * 任务模块
  * A simple {@link Fragment} subclass.
  */
 public class TaskFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener {

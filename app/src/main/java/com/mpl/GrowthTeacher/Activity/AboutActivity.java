@@ -9,6 +9,9 @@ import android.widget.TextView;
 import com.mpl.GrowthTeacher.R;
 import com.mpl.GrowthTeacher.Tools.NetworkUtils;
 
+/**
+ * 关于
+ */
 public class AboutActivity extends AppCompatActivity {
     private LinearLayout back;
     private TextView tv_version;

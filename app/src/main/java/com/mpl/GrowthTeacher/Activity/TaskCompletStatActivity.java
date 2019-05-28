@@ -36,6 +36,9 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
+/**
+ * 任务列表容器
+ */
 public class TaskCompletStatActivity extends AppCompatActivity implements View.OnClickListener {
     private String task_id, name;
     private LinearLayout back;
